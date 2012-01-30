@@ -7,7 +7,7 @@
 
 # include "wnes.h"
 
-int	disassemble(struct wnes_conf_s *conf)
+int		disassemble(struct wnes_conf_s *conf)
 {
   int		pc = 0;
   uint8_t	opcode = 0;
@@ -18,7 +18,7 @@ int	disassemble(struct wnes_conf_s *conf)
 
   prg_count = (uint16_t)conf->head_rom->PRG_ROM_size << 10;
 
-  origin += 15;
+  origin += 16;
 
   printf("prg_coumt = %d\n", prg_count);
   for (pc = 0; pc < prg_count;)
@@ -28,7 +28,7 @@ int	disassemble(struct wnes_conf_s *conf)
 	{
 	  pc++;
 	  printf("$%04X> %02X:\t.byte $%02x\t\t; INVALID OPCODE !!!\n",
-		 origin + pc, opcode, opcode);
+		 origin + pc - 1, opcode, opcode);
 	  continue;
 	}
       switch(InstructionOperandTypes[opcode])
@@ -43,7 +43,7 @@ int	disassemble(struct wnes_conf_s *conf)
 	  tmp_word.b.l = conf->rom.PRG_ROM[pc];
 	  pc++;
 	  tmp_word.b.h = conf->rom.PRG_ROM[pc];
-	  printf("$%04X> %02X %02X%02X:\t%s $%02X%02X\t;\n", origin + pc - 2,
+	  printf("$%04X> %02X %02X%02X:\t%s $%02X%02X\t\t;\n", origin + pc - 2,
 		 opcode, tmp_word.b.l, tmp_word.b.h, InstructionNames[opcode],
 		 tmp_word.b.h, tmp_word.b.l);
 	  pc++;
@@ -54,9 +54,9 @@ int	disassemble(struct wnes_conf_s *conf)
 	  tmp_word.b.l = conf->rom.PRG_ROM[pc];
 	  pc++;
 	  tmp_word.b.h = conf->rom.PRG_ROM[pc];
-	  printf("$%04X> %02X %02X%02X:\t%s $%02X%02X,X\t;\n", origin + pc - 2,
+	  printf("$%04X> %02X %02X%02X:\t%s $%02X%02X,X\t\t;\n", origin + pc - 2,
 		 opcode, tmp_word.b.l, tmp_word.b.h, InstructionNames[opcode],
-		 tmp_word.b.l, tmp_word.b.h);
+		 tmp_word.b.h, tmp_word.b.l);
 	  pc++;
 	  break;
 
@@ -65,16 +65,16 @@ int	disassemble(struct wnes_conf_s *conf)
 	  tmp_word.b.l = conf->rom.PRG_ROM[pc];
 	  pc++;
 	  tmp_word.b.h = conf->rom.PRG_ROM[pc];
-	  printf("$%04X> %02X %02X%02X:\t%s $%02X%02X,Y\t;\n", origin + pc - 2,
+	  printf("$%04X> %02X %02X%02X:\t%s $%02X%02X,Y\t\t;\n", origin + pc - 2,
 		 opcode, tmp_word.b.l, tmp_word.b.h, InstructionNames[opcode],
-		 tmp_word.b.l, tmp_word.b.h);
+		 tmp_word.b.h, tmp_word.b.l);
 	  pc++;
 	  break;
 
 	case IMMEDIATE:
 	  pc++;
 	  tmp_byte1 = conf->rom.PRG_ROM[pc];
-	  printf("$%04X> %02X %02X:\t%s #$%02X\t;\n", origin + pc - 1, opcode,
+	  printf("$%04X> %02X %02X:\t%s #$%02X\t\t;\n", origin + pc - 1, opcode,
 		 tmp_byte1, InstructionNames[opcode], tmp_byte1);
 	  pc++;
 	  break;
@@ -90,7 +90,7 @@ int	disassemble(struct wnes_conf_s *conf)
 	  tmp_word.b.l = conf->rom.PRG_ROM[pc];
 	  pc++;
 	  tmp_word.b.h = conf->rom.PRG_ROM[pc];
-	  printf("$%04X> %02X %02X%02X:\t%s ($%02X%02X)\t;\n", origin + pc - 2,
+	  printf("$%04X> %02X %02X%02X:\t%s ($%02X%02X)\t\t;\n", origin + pc - 2,
 		 opcode, tmp_word.b.l, tmp_word.b.h, InstructionNames[opcode],
 		 tmp_word.b.l, tmp_word.b.h);
 	  pc++;
@@ -115,7 +115,7 @@ int	disassemble(struct wnes_conf_s *conf)
 	case RELATIVE:
 	  pc++;
 	  tmp_byte1 = conf->rom.PRG_ROM[pc];
-	  printf("$%04X> %02X %02X:\t%s $%04X\t;\n", origin + pc - 1, opcode,
+	  printf("$%04X> %02X %02X:\t%s $%04X\t\t;\n", origin + pc - 1, opcode,
 		 tmp_byte1, InstructionNames[opcode], (origin + pc)
 		 + (int8_t)(tmp_byte1) + 1);
 	  pc++;

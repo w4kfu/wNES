@@ -40,7 +40,7 @@ int		load_rom(struct wnes_conf_s *conf)
       conf->rom.PRG_ROM = conf->p + 16 + off;
       if (conf->head_rom->CHR_ROM_size)
 	conf->rom.CHR_ROM = conf->p + 16
-	  + (conf->head_rom->PRG_ROM_size << 4) + off;
+	  + (conf->head_rom->PRG_ROM_size << 10) + off;
     }
   return (1);
 }
