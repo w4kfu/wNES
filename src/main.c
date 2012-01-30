@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
     exit(EXIT_FAILURE);
   if (!load_rom(&conf))
     exit(EXIT_FAILURE);
+  disassemble(&conf);
   free_all(&conf);
   return (0);
 }

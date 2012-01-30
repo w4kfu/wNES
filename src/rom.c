@@ -18,7 +18,7 @@ int		load_rom(struct wnes_conf_s *conf)
       printf("Not a valid header\n");
       return(0);
     }
-  printf("PRG_ROM size = %d\n", conf->head_rom->PRG_ROM_size);
+  printf("PRG_ROM size = %d\n", conf->head_rom->PRG_ROM_size << 4);
   printf("CHR_ROM size = %d\n", conf->head_rom->CHR_ROM_size);
   printf("Flag 6 = %d\n", conf->head_rom->flags_6);
   printf("Flag 7 = %d\n", conf->head_rom->flags_7);

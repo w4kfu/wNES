@@ -19,8 +19,10 @@
 # include <string.h>
 
 typedef struct wnes_conf_s wnes_conf_s;
+typedef union word	   word;
 
 # include "rom.h"
+# include "6502.h"
 
 struct			wnes_conf_s
 {
@@ -30,6 +32,16 @@ struct			wnes_conf_s
   char			*p;
   struct header_s	*head_rom;
   struct rom_s		rom;
+};
+
+union		word
+{
+
+  struct
+  { uint8_t h;
+    uint8_t l;
+  }b;
+  uint16_t w;
 };
 
 #endif /* !WNES_H_ */
