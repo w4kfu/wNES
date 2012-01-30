@@ -22,6 +22,14 @@ struct		header_s
   uint8_t	zerobytes[5];
 };
 
+struct		rom_s
+{
+  uint32_t	has_trainer;
+  char		*PRG_ROM;
+  char		*CHR_ROM;
+  char		*PRG_RAM;
+};
 
+int load_rom(struct wnes_conf_s *conf);
 
 #endif /* !ROM_H_ */

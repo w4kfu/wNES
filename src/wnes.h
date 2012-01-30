@@ -16,15 +16,20 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <sys/mman.h>
+# include <string.h>
+
+typedef struct wnes_conf_s wnes_conf_s;
 
 # include "rom.h"
 
-struct		wnes_conf_s
+struct			wnes_conf_s
 {
-  char		*name;
-  int		fd;
-  struct stat	*sb;
-  char		*p;
+  char			*name;
+  int32_t		fd;
+  struct stat		sb;
+  char			*p;
+  struct header_s	*head_rom;
+  struct rom_s		rom;
 };
 
 #endif /* !WNES_H_ */
